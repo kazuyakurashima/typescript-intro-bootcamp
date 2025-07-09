@@ -17,9 +17,12 @@ type Todo = {
     // 列挙型を指定する
 };
 // type Todo = { ... };     型エイリアスという記法。
+// Todoは別名（エイリアス）
+// id,titleなどの型を決める→id,titleを変数として宣言
+// id,titleは、プロパティ
 // TypeScript 独自の記法 です。
 // これは、TypeScript の**「型エイリアス（Type Alias）」**という機能を使って、新しい型を定義している部分です。
-// { }というここに、Todoという別名・あだ名というエイリアスをつけてあげた。
+// { }というここに、Todoという別名（エイリアス）をつけてあげた。
 
 
 // Todoリスト（配列）
@@ -27,7 +30,38 @@ let todoList:Todo[] = [];
 // 配列として初期化しておく
 
 // 引数としてタプルのデータを受け取ってTodo型のオブジェクトを返す関数
-function createTodo([title,priority]:[string,number]):Todo{
+function createTodo　([title,priority]:[string,number]):Todo　{
+    // 引数が配列になっている.createTodo( [ ] )
+    // 配列は、[title,priority]という配列。
+    // そこに、別々の型がついている: [string, number]
+    // つまり、型と順番が決まった複数要素（＝タプル）。これが配列になっている。
+    // 返り値は、Todo型になります
+
+// ✅ そう！タプルで受け取って、それを「title」と「priority」という
+// ✅ 変数に一気にばらして代入（分割代入）してるの！
+
+// 💡具体的に見てみよう！
+// 💌この関数：
+// function createTodo([title, priority]: [string, number])
+// これは、こういう「タプル」な引数を想定してるの：
+
+
+// ["買い物", 1]
+// 🎁この時点では…
+// ["買い物", 1] はただの「2つの要素が順番に入ってる配列（タプル）」
+
+// それを createTodo() に渡すときに…
+// createTodo(["買い物", 1])
+// このタプルを、引数の [title, priority] に渡すと…
+
+// 🎉こうなる！分割代入！
+// // 呼び出されたときのイメージ
+// function createTodo(["買い物", 1]) {
+//     const title = "買い物";
+//     const priority = 1;
+// }
+// ↑ こうやって 中身を一気に「ばらして使える」 のが分割代入（destructuring）なんだよっ💕
+
     const newTodo:Todo = {
         // オブジェクトを新規に作成
         id:Date.now(),
