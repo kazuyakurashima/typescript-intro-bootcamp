@@ -7,6 +7,7 @@ enum TodoStatus {
 // enum（イーナム：列挙型）
 // enum は enumeration（列挙） の略で、あらかじめ定義された値の集合（列挙型） を指す言葉です。
 // 主にプログラミングで使われ、一定の選択肢（例：色、状態、モードなど）を限定して扱うための型です。
+// TodoStatusは、数値が振られている、オブジェクトです。
 
 type Todo = {
     id:string | number;
@@ -24,13 +25,49 @@ type Todo = {
 // これは、TypeScript の**「型エイリアス（Type Alias）」**という機能を使って、新しい型を定義している部分です。
 // { }というここに、Todoという別名（エイリアス）をつけてあげた。
 
-
 // Todoリスト（配列）
 let todoList:Todo[] = [];
 // 配列として初期化しておく
 
+
 // 引数としてタプルのデータを受け取ってTodo型のオブジェクトを返す関数
-function createTodo　([title,priority]:[string,number]):Todo　{
+function createTodo ([title,priority]:[string,number]):Todo {
+    const newTodo:Todo = {
+        // オブジェクトを新規に作成
+        id:Date.now(),
+        // 1970年1月1日0時0分0秒からの経過ミリ秒（数字）
+        title:title,
+        priority:priority,
+        status:TodoStatus.Done
+        // 列挙型のデータを指定
+    };
+    return newTodo;
+}
+
+// Todoを配列ないに格納するための関数
+function addTodo(newTodo:Todo):void {
+    todoList.push(newTodo);
+}
+
+
+const firstTodo = createTodo(["そうじ", 2]);
+// { id: 1752141815151, title: 'そうじ', priority: 2, status: 2 }
+
+const secondTodo:Todo = createTodo(["洗濯",1]);
+// { id: 1752141815151, title: '洗濯', priority: 1, status: 2 }
+// ・・・Added;洗濯
+
+addTodo(secondTodo);
+// [ { id: 1752141815151, title: 'そうじ→洗濯', priority: 2→1, status: 2 } ]
+
+console.log(firstTodo);
+console.log(`Added;${secondTodo.title}`);
+console.log(todoList);
+
+
+
+
+
     // 引数が配列になっている.createTodo( [ ] )
     // 配列は、[title,priority]という配列。
     // そこに、別々の型がついている: [string, number]
@@ -61,28 +98,3 @@ function createTodo　([title,priority]:[string,number]):Todo　{
 //     const priority = 1;
 // }
 // ↑ こうやって 中身を一気に「ばらして使える」 のが分割代入（destructuring）なんだよっ💕
-
-    const newTodo:Todo = {
-        // オブジェクトを新規に作成
-        id:Date.now(),
-        // 1970年1月1日0時0分0秒からの経過ミリ秒（数字）
-        title:title,
-        priority:priority,
-        status:TodoStatus.Todo
-        // 列挙型のデータを指定
-    };
-    return newTodo;
-}
-
-// Todoを配列ないに格納するための関数
-function addTodo(todo:Todo):void {
-    todoList.push(todo);
-    console.log(`Added;${todo.title}`);
-    // 表示用
-}
-
-const myTodo:Todo = createTodo(["プログラム作成",1]);
-// オブジェクトを作成してmyTodoに格納する
-
-addTodo(myTodo);
-console.log(todoList);
